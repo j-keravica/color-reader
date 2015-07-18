@@ -1,0 +1,23 @@
+<h1> Copy URL to start reading </h1>
+
+<%= form_for :page, url: pages_path do |f| %>
+ 
+  <p>
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+  	<%= f.label :speed %><br>
+  	<%= f.select :speed, options_for_select([["100 wpm", 100], ["200 wpm", 200], ["250 wpm", 250], ["300 wpm", 300]]) %>
+  </p>
+
+  <p>
+  	<%= f.label :color %><br>
+  	<%= f.select :color, options_for_select([["black", "b"], ["random", "r"]]) %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
