@@ -13,7 +13,7 @@ class PagesController < ApplicationController
 		doc.xpath('//h1 | //p').each do |node|
 	      	text = text + " " + node.text
 	    end
-	    #puts text.split
+
 	    title = doc.xpath('//title').text
 		@user = current_user
 		@page = Page.new(:url => url, :title => title, :text => text, :user_id => @user.id)
@@ -24,7 +24,25 @@ class PagesController < ApplicationController
 		response1 = resource['set/' + color].get
 		cookie = response1.cookies
 		puts cookie
-		response2 = resource['color/blahblah'].get({:cookies => cookie})
+
+	    words = text.split
+	    num_of_times = words.length - 1
+
+	    scheduler = Rufus::Scheduler.new
+
+	    i = 0;
+
+	    scheduler.every '1s', :times => num_of_times do
+	  		RestClient.post(
+	  			'http://localhost:4567/color',
+	  			{:word => words[i]},
+	  			{:cookies => cookie}
+	  		)
+	  		i += 1
+	  		#puts i
+		end
+
+		
 
 		render nothing: true
 
