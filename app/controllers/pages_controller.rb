@@ -31,8 +31,10 @@ class PagesController < ApplicationController
 	    scheduler = Rufus::Scheduler.new
 
 	    i = 0;
+	    wpm = params[:page][:speed].to_i
+	    puts "The calculated time is " + time(wpm.to_i)
 
-	    scheduler.every '1s', :times => num_of_times do
+	    scheduler.every time(wpm), :times => num_of_times do
 	  		RestClient.post(
 	  			'http://localhost:4567/color',
 	  			{:word => words[i]},
@@ -50,6 +52,11 @@ class PagesController < ApplicationController
 
 	def show
 		@page = Page.find(params[:id])
+	end
+
+	private
+	def time(wpm)
+		(60.0/wpm).round(1).to_s + 's'
 	end
 
 end
