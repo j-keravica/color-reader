@@ -1,6 +1,6 @@
 <h1> Copy URL to start reading </h1>
 
-<%= form_for :page, url: pages_path do |f| %>
+<%= form_for :page, remote: true, url: pages_path do |f| %>
  
   <p>
     <%= f.label :url %><br>
@@ -18,6 +18,6 @@
   </p>
  
   <p>
-    <%= f.submit %>
+    <%= f.submit "Read!", :id => "read_btn"%>
   </p>
 <% end %>

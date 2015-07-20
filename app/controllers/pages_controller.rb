@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'rest-client'
 
 class PagesController < ApplicationController
 
@@ -6,8 +7,6 @@ class PagesController < ApplicationController
 	end
 
 	def create
-		#title = Nokogiri::HTML::Document.parse(HTTParty.get(params[:page][:url]).body).title
-		#render plain: params[:page].inspect
 		url = params[:page][:url]
 		doc = Nokogiri::HTML(open(url))
 		text = ""
@@ -19,10 +18,20 @@ class PagesController < ApplicationController
 		@user = current_user
 		@page = Page.new(:url => url, :title => title, :text => text, :user_id => @user.id)
 		@page.save
-		redirect_to @page
+
+		color = params[:page][:color]
+		resource = RestClient::Resource.new('http://localhost:4567')
+		response1 = resource['set/' + color].get
+		cookie = response1.cookies
+		puts cookie
+		response2 = resource['color/blahblah'].get({:cookies => cookie})
+
+		render nothing: true
+
 	end
 
 	def show
 		@page = Page.find(params[:id])
 	end
+
 end
