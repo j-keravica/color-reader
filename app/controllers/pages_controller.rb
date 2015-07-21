@@ -20,10 +20,10 @@ class PagesController < ApplicationController
 		@page.save
 
 		color = params[:page][:color]
-		resource = RestClient::Resource.new(ENV['COLOR_URL'])
-		response1 = resource['/set/' + color].get
-		cookie = response1.cookies
-		puts cookie
+		#resource = RestClient::Resource.new(ENV['COLOR_URL'])
+		#response1 = resource['/set/' + color].get
+		#cookie = response1.cookies
+		#puts cookie
 
 	    words = text.split
 	    num_of_times = words.length - 1
@@ -37,8 +37,8 @@ class PagesController < ApplicationController
 	    scheduler.every time(wpm), :times => num_of_times do
 	  		RestClient.post(
 	  			ENV['COLOR_URL'] + '/color',
-	  			{:word => words[i]},
-	  			{:cookies => cookie}
+	  			{:word => words[i],
+	  			:color => color}
 	  		)
 	  		i += 1
 	  		#puts i

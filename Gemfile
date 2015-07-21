@@ -30,7 +30,7 @@ gem 'httparty'
 
 gem 'rest-client'
 
-gem 'http-cookie'
+#gem 'http-cookie'
 
 gem 'rufus-scheduler'
 
