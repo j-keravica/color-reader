@@ -20,7 +20,7 @@ class PagesController < ApplicationController
 		@page.save
 
 		color = params[:page][:color]
-		resource = RestClient::Resource.new('http://localhost:4567')
+		resource = RestClient::Resource.new(ENV['COLOR_URL'])
 		response1 = resource['set/' + color].get
 		cookie = response1.cookies
 		puts cookie
@@ -36,7 +36,7 @@ class PagesController < ApplicationController
 
 	    scheduler.every time(wpm), :times => num_of_times do
 	  		RestClient.post(
-	  			'http://localhost:4567/color',
+	  			ENV['COLOR_URL'] + '/color',
 	  			{:word => words[i]},
 	  			{:cookies => cookie}
 	  		)
@@ -52,6 +52,16 @@ class PagesController < ApplicationController
 
 	def show
 		@page = Page.find(params[:id])
+	end
+
+	def pause
+		puts "pause"
+		render nothing: true
+	end
+
+	def resume
+		puts "resume"
+		render nothing: true
 	end
 
 	private
