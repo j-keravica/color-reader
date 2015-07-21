@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
 		color = params[:page][:color]
 		resource = RestClient::Resource.new(ENV['COLOR_URL'])
-		response1 = resource['set/' + color].get
+		response1 = resource['/set/' + color].get
 		cookie = response1.cookies
 		puts cookie
 
