@@ -34,7 +34,8 @@ class PagesController < ApplicationController
 	    wpm = params[:page][:speed].to_i
 	    puts "The calculated time is " + time(wpm.to_i)
 
-	    scheduler.every time(wpm), :times => num_of_times do
+	    job_id =
+	    Rufus::Scheduler.singleton.every time(wpm), :times => num_of_times do
 	  		RestClient.post(
 	  			ENV['COLOR_URL'] + '/color',
 	  			{:word => words[i],
@@ -44,7 +45,8 @@ class PagesController < ApplicationController
 	  		#puts i
 		end
 
-		
+		puts "This happens after scheduler"
+		session[:job] = job_id
 
 		render nothing: true
 
@@ -56,11 +58,21 @@ class PagesController < ApplicationController
 
 	def pause
 		puts "pause"
+		job_id = session[:job]
+		job = Rufus::Scheduler.singleton.job(job_id)
+		if !job.paused?
+			job.pause
+		end
 		render nothing: true
 	end
 
 	def resume
 		puts "resume"
+		job_id = session[:job]
+		job = Rufus::Scheduler.singleton.job(job_id)
+		if job.paused?
+			job.resume
+		end
 		render nothing: true
 	end
 
