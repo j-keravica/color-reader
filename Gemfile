@@ -46,6 +46,11 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
 
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+end
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
