@@ -1,9 +1,9 @@
-def create_user
+def define_user
 	@user = { username: "user", email: "user@example.com", password: "password" }
 end
 
 def register_user
-  create_user
+  #create_user
   click_link('Sign up')
   fill_in("user_email", :with => @user[:email])
   fill_in("user_username", :with => @user[:username])
@@ -13,7 +13,7 @@ def register_user
 end
 
 def login_user
-  create_user
+  #create_user
   click_link('Sign in')
   fill_in("user_email", :with => @user[:email])
   fill_in("user_password", :with => @user[:password])
@@ -39,12 +39,14 @@ Then(/^I should see the Sign in link$/) do
 end
 
 When(/^I register$/) do
+  define_user
   register_user
 end
 
 Given(/^I am signed in$/) do
-  register_user
-  #should be changed to sign in an existing user
+  define_user
+  User.create(@user)
+  login_user
 end
 
 Then(/^I should see my username at the top$/) do
