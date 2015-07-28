@@ -55,3 +55,14 @@ Then(/^I should see the Sign out link$/) do
   expect(page).to have_link 'Sign out'
 end
 
+When(/^I click the Sign out link$/) do
+  click_link('Sign out')
+end
+
+Then(/^I should be signed out$/) do
+  expect(page).to have_link 'Sign in',
+  href: new_user_session_path
+  expect(page).to have_link 'Sign up',
+  href: new_user_registration_path
+end
+
