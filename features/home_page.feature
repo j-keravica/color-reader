@@ -9,15 +9,15 @@ Feature: Home page
     And I should see the Sign in link
 
   Scenario: Registering
-  	Given I am not signed in
-  	When I register
-  	Then I should see my username at the top
-  	And I should see the Sign out link
+    Given I am not signed in
+    When I register
+    Then I should see my username at the top
+    And I should see the Sign out link
 
   Scenario: Viewing application's home page as a signed in user
-  	Given I am signed in
-  	Then I should see my username at the top
-  	And I should see the Sign out link
+    Given I am signed in
+    Then I should see my username at the top
+    And I should see the Sign out link
 
   Scenario: Signing out
     Given I am signed in

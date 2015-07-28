@@ -29,13 +29,11 @@ Given(/^I am not signed in$/) do
 end
 
 Then(/^I should see Register link$/) do
-  expect(page).to have_link 'Sign up',
-  href: new_user_registration_path
+  expect(page).to have_link 'Sign up', href: new_user_registration_path
 end
 
 Then(/^I should see the Sign in link$/) do
-  expect(page).to have_link 'Sign in',
-  href: new_user_session_path
+  expect(page).to have_link 'Sign in', href: new_user_session_path
 end
 
 When(/^I register$/) do
@@ -62,9 +60,7 @@ When(/^I click the Sign out link$/) do
 end
 
 Then(/^I should be signed out$/) do
-  expect(page).to have_link 'Sign in',
-  href: new_user_session_path
-  expect(page).to have_link 'Sign up',
-  href: new_user_registration_path
+  expect(page).to have_link 'Sign in', href: new_user_session_path
+  expect(page).to have_link 'Sign up', href: new_user_registration_path
 end
 
