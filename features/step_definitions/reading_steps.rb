@@ -10,6 +10,5 @@ When(/^I fill in the form$/) do
 end
 
 Then(/^I should see a message saying the text is being processed$/) do
-  #expect(page).to have_content "Your text stream will start in a few moments"
-
+  expect(page).to have_content "Your text stream will start in a few moments"
 end
