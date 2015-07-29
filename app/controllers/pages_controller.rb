@@ -48,7 +48,6 @@ class PagesController < ApplicationController
 		puts "This happens after scheduler"
 		session[:job] = job_id
 
-		render nothing: true
 
 	end
 
