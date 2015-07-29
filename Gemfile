@@ -75,6 +75,8 @@ group :development, :test do
 
   gem 'factory_girl_rails'
 
+  gem 'selenium-webdriver'
+
 end
 
 ruby "2.2.1"
