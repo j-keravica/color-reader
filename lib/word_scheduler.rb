@@ -1,5 +1,7 @@
 class WordScheduler
 
+  attr_reader :job_id
+
   def initialize(speed, words, color_option)
     @speed = speed
     @words = words
@@ -19,6 +21,7 @@ class WordScheduler
     end
   end
 
+  private
   def send(word)
     RestClient.post(
       ENV['COLOR_URL'] + '/color',

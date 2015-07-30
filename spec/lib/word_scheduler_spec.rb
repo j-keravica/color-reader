@@ -19,14 +19,14 @@ describe "Word Scheduler" do
 
   end
 
+  describe "#start_sending" do
 
-  describe "#send" do
-
-    it "sends the words with the color information" do
-      @scheduler = WordScheduler.new(60, [], "b")
+    it "periodically sends the words with the color information" do
+      @scheduler = WordScheduler.new(60, ["Some", "words"], "b")
       ENV["COLOR_URL"] = "test"
-      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "word", :color => "b"})
-      @scheduler.send("word")
+      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "Some", :color => "b"})
+      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "words", :color => "b"})
+      @scheduler.start_sending
     end
 
   end
