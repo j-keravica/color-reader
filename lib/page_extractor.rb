@@ -1,7 +1,9 @@
+require 'open-uri'
+
 class PageExtractor
 
   def initialize(url)
-    @doc = Nokogiri::HTML(open(url))
+    @doc = Nokogiri::HTML(open(url).read)
   end
 
   def text
@@ -13,7 +15,7 @@ class PageExtractor
   end
 
   def title
-    @doc.xpath('//title').text
+    @doc.xpath('/html/head/title').text
   end
 
 end
