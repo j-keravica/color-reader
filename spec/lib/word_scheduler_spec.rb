@@ -12,7 +12,8 @@ describe "Word Scheduler" do
 
 
   it "sends the words with the color information" do
-    expect(RestClient).to receive(:post).with(ENV['COLOR_URL'] + '/color', {:word => "nesto", :color => "b"})
+    ENV["COLOR_URL"] = "test"
+    expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "nesto", :color => "b"})
     @scheduler.send("nesto")
   end
 
