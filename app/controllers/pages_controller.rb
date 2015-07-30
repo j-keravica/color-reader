@@ -27,13 +27,12 @@ class PagesController < ApplicationController
 
     job_id =
     Rufus::Scheduler.singleton.every time(wpm), :times => num_of_times do
-        RestClient.post(
-            ENV['COLOR_URL'] + '/color',
-            {:word => words[i],
-            :color => color}
-        )
-        i += 1
-        #puts i
+      RestClient.post(
+        ENV['COLOR_URL'] + '/color',
+        {:word => words[i],
+        :color => color}
+      )
+      i += 1
     end
 
     puts "This happens after scheduler"

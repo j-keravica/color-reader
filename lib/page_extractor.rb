@@ -7,11 +7,9 @@ class PageExtractor
   end
 
   def text
-    text = ""
-    @doc.xpath('//h1 | //p').each do |node|
-        text = text + " " + node.text
+    @doc.xpath('//h1 | //p').reduce("") do |text, node|
+      text = text + " " + node.text
     end
-    return text
   end
 
   def title
