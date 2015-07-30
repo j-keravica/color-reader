@@ -13,12 +13,13 @@ class PagesController < ApplicationController
     @page.save
 
     scheduler = WordScheduler.new(params[:page][:speed].to_i, page.text.split, params[:page][:color])
+    scheduler.start_sending
 
     session[:job] = scheduler.job_id
   end
 
   def show
-      @page = Page.find(params[:id])
+    @page = Page.find(params[:id])
   end
 
   def pause
@@ -26,7 +27,7 @@ class PagesController < ApplicationController
     job_id = session[:job]
     job = Rufus::Scheduler.singleton.job(job_id)
     if !job.paused?
-        job.pause
+      job.pause
     end
     render nothing: true
   end
@@ -36,7 +37,7 @@ class PagesController < ApplicationController
     job_id = session[:job]
     job = Rufus::Scheduler.singleton.job(job_id)
     if job.paused?
-        job.resume
+      job.resume
     end
     render nothing: true
   end
