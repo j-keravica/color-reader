@@ -14,8 +14,8 @@ class WordScheduler
 
   def start_sending
     i = 0
-    @job_id =
-    Rufus::Scheduler.singleton.every interval, :times => num_of_times do
+
+    @job_id = Rufus::Scheduler.singleton.every interval, :times => num_of_times do
       send(@words[i])
       i += 1
     end
@@ -25,13 +25,15 @@ class WordScheduler
   def send(word)
     RestClient.post(
       ENV['COLOR_URL'] + '/color',
-      {:word => word,
-      :color => @color_option}
+      {
+        :word => word,
+        :color => @color_option
+      }
     )
   end
 
   def num_of_times
-    @words.length - 1
+    @words.length
   end
 
 end
