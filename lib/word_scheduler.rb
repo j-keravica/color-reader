@@ -2,6 +2,21 @@ class WordScheduler
 
   attr_reader :job_id
 
+  def self.start(speed, words, color_option)
+    scheduler = self.new(speed, words, color_option)
+    scheduler.start
+  end
+
+  def self.pause(job_id)
+    job = Rufus::Scheduler.singleton.job(job_id)
+    job.pause unless job.paused?
+  end
+
+  def self.resume(job_id)
+    job = Rufus::Scheduler.singleton.job(job_id)
+    job.resume if job.paused?
+  end
+
   def initialize(speed, words, color_option)
     @speed = speed
     @words = words
@@ -12,7 +27,7 @@ class WordScheduler
     (60.0/@speed).round(1).to_s + 's'
   end
 
-  def start_sending
+  def start
     i = 0
 
     @job_id = Rufus::Scheduler.singleton.every interval, :times => num_of_times do
@@ -22,7 +37,7 @@ class WordScheduler
   end
 
   private
-  
+
   def send(word)
     RestClient.post(
       ENV['COLOR_URL'] + '/color',
@@ -35,16 +50,6 @@ class WordScheduler
 
   def num_of_times
     @words.length
-  end
-
-  def self.pause(job_id)
-    job = Rufus::Scheduler.singleton.job(job_id)
-    job.pause unless job.paused?
-  end
-
-  def self.resume(job_id)
-    job = Rufus::Scheduler.singleton.job(job_id)
-    job.resume if job.paused?
   end
 
 end
