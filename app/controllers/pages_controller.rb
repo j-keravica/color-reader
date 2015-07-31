@@ -13,7 +13,7 @@ class PagesController < ApplicationController
     @page.save
 
     scheduler = WordScheduler.new(params[:page][:speed].to_i, page.text.split, params[:page][:color])
-    scheduler.start_sending
+    scheduler.start
 
     session[:job] = scheduler.job_id
   end
