@@ -2,12 +2,6 @@ require "rails_helper"
 
 describe "Word Scheduler" do
 
-  def start_sending
-    @scheduler = WordScheduler.new(60, ["Some", "nice", "words"], "b")
-    ENV["COLOR_URL"] = "test"
-    @scheduler.start_sending
-  end
-
   describe "#interval" do
 
     it "calculates the time interval for sending words" do
@@ -25,7 +19,7 @@ describe "Word Scheduler" do
 
   end
 
-  describe "#start_sending" do
+  describe "#start" do
 
     it "periodically sends the words with the color information" do
       @scheduler = WordScheduler.new(60, ["Some", "words"], "b")
@@ -34,14 +28,14 @@ describe "Word Scheduler" do
       expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "Some", :color => "b"})
       expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "words", :color => "b"})
 
-      @scheduler.start_sending
+      @scheduler.start
       sleep 2.5
     end
 
     it "returns the sending job's id" do
       @scheduler = WordScheduler.new(60, ["Some", "words"], "b")
       ENV["COLOR_URL"] = "test"
-      @scheduler.start_sending
+      @scheduler.start
       expect(@scheduler.job_id).to_not be_nil
     end
 
@@ -52,7 +46,7 @@ describe "Word Scheduler" do
     before do
       @job = double("job")
       allow(@job).to receive(:pause)
-      allow(Rufus::Scheduler).to receive_message_chain(:singleton, :job) { @job }
+      allow(Rufus::Scheduler.singleton).to receive(:job).with(123) { @job }
     end
 
     context "job is running" do
@@ -63,11 +57,6 @@ describe "Word Scheduler" do
 
       it "pauses a job" do
         expect(@job).to receive(:pause)
-        WordScheduler.pause(123)
-      end
-
-      it "pauses a job with the given id" do
-        expect(Rufus::Scheduler).to receive_message_chain(:singleton, :job).with(123) { @job }
         WordScheduler.pause(123)
       end
 
@@ -84,11 +73,6 @@ describe "Word Scheduler" do
         WordScheduler.pause(123)
       end
 
-      it "will not pause the job with the given id" do
-        expect(Rufus::Scheduler).to receive_message_chain(:singleton, :job).with(123) { @job }
-        WordScheduler.pause(123)
-      end
-
     end
 
   end
@@ -98,7 +82,7 @@ describe "Word Scheduler" do
     before do
       @job = double("job")
       allow(@job).to receive(:resume)
-      allow(Rufus::Scheduler).to receive_message_chain(:singleton, :job) { @job }
+      allow(Rufus::Scheduler.singleton).to receive(:job).with(123) { @job }
     end
 
     context "job is paused" do
