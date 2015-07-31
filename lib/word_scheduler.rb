@@ -5,6 +5,7 @@ class WordScheduler
   def self.start(speed, words, color_option)
     scheduler = self.new(speed, words, color_option)
     scheduler.start
+    return scheduler.job_id
   end
 
   def self.pause(job_id)

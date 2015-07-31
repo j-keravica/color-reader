@@ -22,21 +22,19 @@ describe "Word Scheduler" do
   describe "#start" do
 
     it "periodically sends the words with the color information" do
-      @scheduler = WordScheduler.new(60, ["Some", "words"], "b")
       ENV["COLOR_URL"] = "test"
 
       expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "Some", :color => "b"})
       expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "words", :color => "b"})
 
-      @scheduler.start
+      WordScheduler.start(60, ["Some", "words"], "b")
       sleep 2.5
     end
 
     it "returns the sending job's id" do
-      @scheduler = WordScheduler.new(60, ["Some", "words"], "b")
       ENV["COLOR_URL"] = "test"
-      @scheduler.start
-      expect(@scheduler.job_id).to_not be_nil
+      job_id = WordScheduler.start(60, ["Some", "words"], "b")
+      expect(job_id).to_not be_nil
     end
 
   end

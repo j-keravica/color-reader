@@ -12,10 +12,9 @@ class PagesController < ApplicationController
     @page = Page.new(:url => url, :title => page.title, :text => page.text, :user_id => current_user.id)
     @page.save
 
-    scheduler = WordScheduler.new(params[:page][:speed].to_i, page.text.split, params[:page][:color])
-    scheduler.start
+    job_id = WordScheduler.start(params[:page][:speed].to_i, page.text.split, params[:page][:color])
 
-    session[:job] = scheduler.job_id
+    session[:job] = job_id
   end
 
   def show
