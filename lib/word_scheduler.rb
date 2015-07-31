@@ -22,6 +22,7 @@ class WordScheduler
   end
 
   private
+  
   def send(word)
     RestClient.post(
       ENV['COLOR_URL'] + '/color',
@@ -34,6 +35,16 @@ class WordScheduler
 
   def num_of_times
     @words.length
+  end
+
+  def self.pause(job_id)
+    job = Rufus::Scheduler.singleton.job(job_id)
+    job.pause unless job.paused?
+  end
+
+  def self.resume(job_id)
+    job = Rufus::Scheduler.singleton.job(job_id)
+    job.resume if job.paused?
   end
 
 end

@@ -2,6 +2,12 @@ require "rails_helper"
 
 describe "Word Scheduler" do
 
+  def start_sending
+    @scheduler = WordScheduler.new(60, ["Some", "nice", "words"], "b")
+    ENV["COLOR_URL"] = "test"
+    @scheduler.start_sending
+  end
+
   describe "#interval" do
 
     it "calculates the time interval for sending words" do
@@ -37,6 +43,88 @@ describe "Word Scheduler" do
       ENV["COLOR_URL"] = "test"
       @scheduler.start_sending
       expect(@scheduler.job_id).to_not be_nil
+    end
+
+  end
+
+  describe "#pause" do
+
+    before do
+      @job = double("job")
+      allow(@job).to receive(:pause)
+      allow(Rufus::Scheduler).to receive_message_chain(:singleton, :job) { @job }
+    end
+
+    context "job is running" do
+
+      before do
+        allow(@job).to receive(:paused?) { false }
+      end
+
+      it "pauses a job" do
+        expect(@job).to receive(:pause)
+        WordScheduler.pause(123)
+      end
+
+      it "pauses a job with the given id" do
+        expect(Rufus::Scheduler).to receive_message_chain(:singleton, :job).with(123) { @job }
+        WordScheduler.pause(123)
+      end
+
+    end
+
+    context "job is already paused" do
+
+      before do
+        allow(@job).to receive(:paused?) { true }
+      end
+
+      it "will not pause the job" do
+        expect(@job).to_not receive(:pause)
+        WordScheduler.pause(123)
+      end
+
+      it "will not pause the job with the given id" do
+        expect(Rufus::Scheduler).to receive_message_chain(:singleton, :job).with(123) { @job }
+        WordScheduler.pause(123)
+      end
+
+    end
+
+  end
+
+  describe "#resume" do
+
+    before do
+      @job = double("job")
+      allow(@job).to receive(:resume)
+      allow(Rufus::Scheduler).to receive_message_chain(:singleton, :job) { @job }
+    end
+
+    context "job is paused" do
+
+      before do
+        allow(@job).to receive(:paused?) { true }
+      end
+
+      it "resumes a job" do
+        expect(@job).to receive(:resume)
+        WordScheduler.resume(123)
+      end
+
+    end
+
+    context "job is already running" do
+
+      before do
+        allow(@job).to receive(:paused?) { false }
+      end
+
+      it "won't resume the job" do
+        expect(@job).to_not receive(:resume)
+        WordScheduler.resume(123)
+      end
+
     end
 
   end

@@ -23,22 +23,12 @@ class PagesController < ApplicationController
   end
 
   def pause
-    puts "pause"
-    job_id = session[:job]
-    job = Rufus::Scheduler.singleton.job(job_id)
-    if !job.paused?
-      job.pause
-    end
+    WordScheduler.pause(session[:job])
     render nothing: true
   end
 
   def resume
-    puts "resume"
-    job_id = session[:job]
-    job = Rufus::Scheduler.singleton.job(job_id)
-    if job.paused?
-      job.resume
-    end
+    WordScheduler.resume(session[:job])
     render nothing: true
   end
 
