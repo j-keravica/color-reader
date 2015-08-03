@@ -3,35 +3,38 @@ require 'rails_helper'
 describe PagesController, :type => :controller do
 
   describe "POST create" do
+    let(:user) { double(User) }
+    let(:page) { double(PageExtractor, :title => nil, :text => nil) }
+
     before do
-      @user = double(User)
-      @page = double(PageExtractor)
-      allow(controller).to receive(:current_user).and_return(@user)
-      allow(PageExtractor).to receive(:new).and_return(@page)
-      allow(@page).to receive(:title)
-      allow(@page).to receive(:text)
-      allow(@page).to receive_message_chain(:text, :split)
-      allow(@user).to receive_message_chain(:pages, :create).and_return(true)
+      allow(controller).to receive(:current_user).and_return(user)
+      allow(PageExtractor).to receive(:new).and_return(page)
+      allow(page).to receive_message_chain(:text, :split)
+      allow(user).to receive_message_chain(:pages, :create).and_return(true)
       allow(WordScheduler).to receive(:start).and_return("123")
     end
 
-    it "extracts the text from the page" do
-      expect(PageExtractor).to receive(:new).and_return(@page)
+    def do_create
       post :create, :page => { :url => "abc" }, :format => 'js'
     end
 
+    it "extracts the text from the page" do
+      expect(PageExtractor).to receive(:new).and_return(page)
+      do_create
+    end
+
     it "creates a new page" do
-      expect(@user).to receive_message_chain(:pages, :create)
-      post :create, :page => { :url => "abc" }, :format => 'js'
+      expect(user).to receive_message_chain(:pages, :create)
+      do_create
     end
 
     it "starts the word stream" do
       expect(WordScheduler).to receive(:start)
-      post :create, :page => { :url => "abc" }, :format => 'js'
+      do_create
     end
 
     it "sets the session variable to the current job's id" do
-      post :create, :page => { :url => "abc" }, :format => 'js'
+      do_create
       expect(session[:job]).to_not be_nil
     end
   end
