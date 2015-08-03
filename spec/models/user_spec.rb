@@ -21,16 +21,6 @@ describe User do
   it { should have_db_index(:reset_password_token) }
 
   describe "checks uniqueness" do
-    before do
-      User.create!(
-        {
-          :email => "someemail@example.com",
-          :username => "username",
-          :password => "password",
-          :password_confirmation => "password"
-        }
-      )
-    end
 
     it { should validate_uniqueness_of(:username) }
     it { should validate_uniqueness_of(:email) }

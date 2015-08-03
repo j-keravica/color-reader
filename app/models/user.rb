@@ -9,11 +9,6 @@ class User < ActiveRecord::Base
             :uniqueness => {
               :case_sensitive => false
             }
-  validates :email,
-            :presence => true,
-            :uniqueness => {
-              :case_sensitive => false
-            }
   validates :reset_password_token,
             :uniqueness => {
               :case_sensitive => false
