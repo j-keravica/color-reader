@@ -8,17 +8,12 @@ class PagesController < ApplicationController
 
   def create
     url = params[:page][:url]
-    page = PageExtractor.new(url)
-    @page = Page.new(:url => url, :title => page.title, :text => page.text, :user_id => current_user.id)
-    @page.save
+    extracted_page = PageExtractor.new(url)
+    current_user.pages.create(:url => url, :title => extracted_page.title, :text => extracted_page.text)
 
-    job_id = WordScheduler.start(params[:page][:speed].to_i, page.text.split, params[:page][:color])
+    job_id = WordScheduler.start(params[:page][:speed].to_i, extracted_page.text.split, params[:page][:color])
 
     session[:job] = job_id
-  end
-
-  def show
-    @page = Page.find(params[:id])
   end
 
   def pause
@@ -29,11 +24,6 @@ class PagesController < ApplicationController
   def resume
     WordScheduler.resume(session[:job])
     render nothing: true
-  end
-
-  private
-  def time(wpm)
-    (60.0/wpm).round(1).to_s + 's'
   end
 
 end
