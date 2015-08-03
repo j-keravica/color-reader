@@ -39,7 +39,7 @@ describe PagesController, :type => :controller do
   describe "PUT pause" do
     it "pauses the word stream" do
       expect(WordScheduler).to receive(:pause)
-      get :pause
+      put :pause
       expect(response.status).to eq(200)
     end
   end
@@ -47,7 +47,7 @@ describe PagesController, :type => :controller do
   describe "PUT resume" do
     it "resumes the paused word stream" do
       expect(WordScheduler).to receive(:resume)
-      get :resume
+      put :resume
       expect(response.status).to eq(200)
     end
   end
