@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PagesController, :type => :controller do
+RSpec.describe PagesController, :type => :controller do
 
   describe "POST create" do
     let(:user) { double(User) }

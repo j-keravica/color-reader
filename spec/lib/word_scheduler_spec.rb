@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Word Scheduler" do
+RSpec.describe "Word Scheduler" do
 
   describe "#interval" do
 

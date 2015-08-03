@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Page Extractor" do
+RSpec.describe "Page Extractor" do
 
   before :each do
     @page = PageExtractor.new(File.join(Rails.root, "spec/lib/example_pages/example.html"))
