@@ -20,7 +20,7 @@ describe User do
   it { should have_db_index(:email) }
   it { should have_db_index(:reset_password_token) }
 
-  describe "checks uniqueness" do
+  describe "validations" do
 
     it { should validate_uniqueness_of(:username) }
     it { should validate_uniqueness_of(:email) }
