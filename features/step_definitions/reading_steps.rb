@@ -12,3 +12,14 @@ end
 Then(/^I should see a message saying the text is being processed$/) do
   expect(page).to have_content "Your text stream will start in a few moments"
 end
+
+When(/^I fill in the form with a bad url$/) do
+  fill_in("page_url", :with => "nonsense")
+  select '60 wpm', from: 'page_speed'
+  select 'b', from: 'page_color'
+  click_button("Read!")
+end
+
+Then(/^I should see a message saying the url is invalid$/) do
+  expect(page).to have_content "URL format is not valid"
+end
