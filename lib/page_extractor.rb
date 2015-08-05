@@ -2,18 +2,11 @@ require 'open-uri'
 
 class PageExtractor
 
-  def initialize(url)
-    @doc = Nokogiri::HTML(open(url).read)
-  end
+  def self.extract_page(url)
+    raise Exceptions::InvalidURL, "URL format is not valid" unless UrlValidator.valid_format?(url)
+    raise Exceptions::InvalidURL, "URL cannot be reached" unless UrlValidator.reachable?(url)
 
-  def text
-    @doc.xpath('//h1 | //p').reduce("") do |text, node|
-      text = text + " " + node.text
-    end
-  end
-
-  def title
-    @doc.xpath('/html/head/title').text
+    page = ExtractedPage.new(url)
   end
 
 end

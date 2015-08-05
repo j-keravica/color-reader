@@ -8,12 +8,16 @@ class PagesController < ApplicationController
 
   def create
     url = params[:page][:url]
-    extracted_page = PageExtractor.new(url)
+    extracted_page = PageExtractor.extract_page(url)
     current_user.pages.create(:url => url, :title => extracted_page.title, :text => extracted_page.text)
-
     job_id = WordScheduler.start(params[:page][:speed].to_i, extracted_page.text.split, params[:page][:color])
-
     session[:job] = job_id
+
+  rescue Exceptions::InvalidURL => e
+    @message = e.message
+    respond_to do |format|   
+      format.js { render "invalid" }
+    end
   end
 
   def pause
