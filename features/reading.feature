@@ -1,8 +1,8 @@
 Feature: Reading
-When a user pastes the URL into the URL field and clicks the "Read!" button,
-a corresponding message should appear saying whether the URL is okay
-and the stream is about to start, or the URL is invalid (inappropriate format
-or unreachable).
+  When a user pastes the URL into the URL field and clicks the "Read!" button,
+  a corresponding message should appear saying whether the URL is okay
+  and the stream is about to start, or the URL is invalid (inappropriate format
+  or unreachable).
 
   Background:
     Given I am on the home page
