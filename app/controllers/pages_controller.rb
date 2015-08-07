@@ -6,6 +6,10 @@ class PagesController < ApplicationController
   def new
   end
 
+  def index
+    @pages = current_user.pages
+  end
+
   def create
     url = params[:page][:url]
     extracted_page = PageExtractor.extract_page(url)
