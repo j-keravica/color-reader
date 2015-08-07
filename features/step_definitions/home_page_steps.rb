@@ -1,22 +1,22 @@
-def define_user
-	@user = { username: "user", email: "user@example.com", password: "password" }
+def user_attributes
+	{ username: "user", email: "user@example.com", password: "password" }
 end
 
 def register_user
   #create_user
   click_link('Sign up')
-  fill_in("user_email", :with => @user[:email])
-  fill_in("user_username", :with => @user[:username])
-  fill_in("user_password", :with => @user[:password])
-  fill_in("user_password_confirmation", :with => @user[:password])
+  fill_in("user_email", :with => user_attributes[:email])
+  fill_in("user_username", :with => user_attributes[:username])
+  fill_in("user_password", :with => user_attributes[:password])
+  fill_in("user_password_confirmation", :with => user_attributes[:password])
   click_button('Sign up')
 end
 
 def login_user
   #create_user
   click_link('Sign in')
-  fill_in("user_email", :with => @user[:email])
-  fill_in("user_password", :with => @user[:password])
+  fill_in("user_email", :with => user_attributes[:email])
+  fill_in("user_password", :with => user_attributes[:password])
   click_button('Log in')
 end
 
@@ -37,18 +37,16 @@ Then(/^I should see the Sign in link$/) do
 end
 
 When(/^I register$/) do
-  define_user
   register_user
 end
 
 Given(/^I am signed in$/) do
-  define_user
-  User.create(@user)
+  @user = User.create(user_attributes)
   login_user
 end
 
 Then(/^I should see my username at the top$/) do
-  expect(page).to have_content "Signed in as " + @user[:username]
+  expect(page).to have_content "Signed in as " + user_attributes[:username]
 end
 
 Then(/^I should see the Sign out link$/) do
