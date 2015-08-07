@@ -12,6 +12,7 @@ Feature: Reading
   Scenario: Filling in the form with a valid url
     When I fill in the form with a valid url
     Then I should see a message saying the text is being processed
+    And I should see the first word being displayed
 
   @javascript
   Scenario: Filling in the form with an invalid url

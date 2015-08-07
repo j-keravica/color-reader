@@ -31,3 +31,26 @@ Your browser does not support the HTML5 canvas tag.
 </canvas>
 <%= button_to "Pause", pause_pages_path, remote: true, method: :put  %><br />
 <%= button_to "Resume", resume_pages_path, remote: true, method: :put  %><br />
+
+
+<script>
+
+  // Other environments, such as production.
+  var pusher = new Pusher('99b6cb58a1159ad76403', {
+      encrypted: true,
+      disableStats: true
+    });
+
+  var channel = pusher.subscribe('test_channel');
+  channel.bind('my_event', function(data) {
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.font = "30px Arial";
+    ctx.fillStyle = data.color;
+    ctx.textAlign = "center";
+    ctx.fillText(data.word,175,50);
+  });
+</script>
+

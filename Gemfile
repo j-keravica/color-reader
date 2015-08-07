@@ -78,6 +78,10 @@ group :development, :test do
 
   gem 'selenium-webdriver'
 
+  gem "pusher"
+
+  gem "pusher-fake"
+
 end
 
 ruby "2.2.1"
