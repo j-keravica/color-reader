@@ -24,7 +24,6 @@ RSpec.describe User do
 
     it { is_expected.to validate_uniqueness_of(:username) }
     it { is_expected.to validate_uniqueness_of(:email) }
-    it { is_expected.to validate_uniqueness_of(:reset_password_token) }
 
     it { is_expected.to validate_presence_of(:username) }
     it { is_expected.to validate_presence_of(:email) }

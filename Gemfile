@@ -78,6 +78,8 @@ group :development, :test do
 
   gem 'selenium-webdriver'
 
+  gem 'dotenv-rails'
+
 end
 
 ruby "2.2.1"
