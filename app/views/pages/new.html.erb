@@ -25,22 +25,24 @@
   </div>
 
   <div class="row">
-    <div class="form-group col-md-2 col-md-offset-5">
+    <div class="form-group col-md-2 col-md-offset-5 text-center">
       <%= f.submit "Read!", :id => "read_btn", :class => "btn btn-primary btn-sm" %>
     </div>
   </div>
 
 <% end %>
 
-<div id="notification">
-  &nbsp;
+<div class = " row">
+  <div id="notification span12 text-center">
+    &nbsp;
+    <canvas id="myCanvas" width="350" height="70" style="border:1px solid #000000; align: center">
+    Your browser does not support the HTML5 canvas tag.
+  </div>
 </div>
 
-<canvas id="myCanvas" width="350" height="70" style="border:1px solid #000000; align: center">
-Your browser does not support the HTML5 canvas tag.
 </canvas>
 <div class="row">
-  <div class="form-group col-md-3 col-md-offset-3">
+  <div class="form-group col-md-3 col-md-offset-3 text-right">
     <%= button_to "Pause", pause_pages_path,
         remote: true,
         method: :put,
