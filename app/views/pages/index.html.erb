@@ -1,15 +1,9 @@
-<h1>Listing pages</h1>
+<h2>Your reading history</h2>
  
-<table>
-  <tr>
-    <th>Title</th>
-    <th>URL</th>
-  </tr>
- 
+<table class="table"> 
   <% @pages.each do |page| %>
     <tr>
-      <td><%= page.title %></td>
-      <td><%= page.url %></td>
+      <td><a href=<%= page.url %>><%= page.title %></td>
     </tr>
   <% end %>
 </table>

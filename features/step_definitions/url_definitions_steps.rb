@@ -14,6 +14,4 @@ end
 Then(/^I should see all the pages I have read$/) do
   expect(page).to have_content("Some news")
   expect(page).to have_content("Something funny")
-  expect(page).to have_content("www.somenews.com")
-  expect(page).to have_content("www.somethingfunny.com")
 end

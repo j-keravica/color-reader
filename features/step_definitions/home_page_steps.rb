@@ -14,7 +14,7 @@ end
 
 def login_user
   #create_user
-  click_link('Sign in')
+  click_link('Log in')
   fill_in("user_email", :with => user_attributes[:email])
   fill_in("user_password", :with => user_attributes[:password])
   click_button('Log in')
@@ -33,7 +33,7 @@ Then(/^I should see Register link$/) do
 end
 
 Then(/^I should see the Sign in link$/) do
-  expect(page).to have_link 'Sign in', href: new_user_session_path
+  expect(page).to have_link 'Log in', href: new_user_session_path
 end
 
 When(/^I register$/) do
@@ -58,7 +58,7 @@ When(/^I click the Sign out link$/) do
 end
 
 Then(/^I should be signed out$/) do
-  expect(page).to have_link 'Sign in', href: new_user_session_path
+  expect(page).to have_link 'Log in', href: new_user_session_path
   expect(page).to have_link 'Sign up', href: new_user_registration_path
 end
 
