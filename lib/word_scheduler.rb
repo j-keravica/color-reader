@@ -44,7 +44,8 @@ class WordScheduler
       ENV['COLOR_URL'] + '/color',
       {
         :word => word,
-        :color => @color_option
+        :color => @color_option,
+        :channel => @job_id.to_s
       }
     )
   end

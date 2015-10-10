@@ -16,6 +16,7 @@ class PagesController < ApplicationController
     current_user.pages.create(:url => url, :title => extracted_page.title, :text => extracted_page.text) unless current_user.nil?
     job_id = WordScheduler.start(params[:page][:speed].to_i, extracted_page.text.split, params[:page][:color])
     session[:job] = job_id
+    @channel = job_id
 
   rescue Exceptions::InvalidURL => e
     @message = e.message

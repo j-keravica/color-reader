@@ -1,6 +1,6 @@
 <%= form_for :page, remote: true, url: pages_path, html: {role: "form"} do |f| %>
   <div class="row ">
-    <div class="form-group col-md-8 col-md-offset-2">
+    <div class="form-group col-md-6 col-md-offset-3 text-center">
       <%= f.label :url, class: "sr-only" %><br>
       <%= f.text_field :url, class: "form-control input-lg", placeholder: "Copy URL to start reading" %>
     </div>
