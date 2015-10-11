@@ -40,6 +40,9 @@ class WordScheduler
   private
 
   def send(word)
+    puts "This is where the words get colored"
+    puts ENV['COLOR_URL']
+    puts @job_id.to_s
     RestClient.post(
       ENV['COLOR_URL'] + '/color',
       {
