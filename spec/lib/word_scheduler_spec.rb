@@ -21,13 +21,18 @@ RSpec.describe "Word Scheduler" do
 
   describe "#start" do
 
+    # before do
+    #   @job_id = double("job_id")
+    #   allow(WordScheduler).to receive(:start).and_return(@job_id)
+    # end
+
     it "periodically sends the words with the color information" do
       ENV["COLOR_URL"] = "test"
 
-      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "Some", :color => "b"})
-      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "words", :color => "b"})
-
-      WordScheduler.start(60, ["Some", "words"], "b")
+      job_id = WordScheduler.start(60, ["Some", "words"], "b")
+      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "Some", :color => "b", :channel => job_id})
+      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "words", :color => "b", :channel => job_id})
+      
       sleep 2.5
     end
 
