@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe PagesController, :type => :controller do
 
   describe "POST create" do
-    let(:user) { double(User) }
-    let(:page) { double(PageExtractor, :title => nil, :text => nil) }
 
     before do
-      allow(controller).to receive(:current_user).and_return(user)
-      allow(PageExtractor).to receive(:extract_page).and_return(page)
-      allow(page).to receive_message_chain(:text, :split)
-      allow(user).to receive_message_chain(:pages, :create).and_return(true)
+      @user = User.create!(
+        :username => "sinisa",
+        :email => "ab@c.com",
+        :password => "12345678"
+      )
+      allow(controller).to receive(:current_user).and_return(@user)
       allow(WordScheduler).to receive(:start).and_return("123")
     end
 
@@ -18,14 +18,9 @@ RSpec.describe PagesController, :type => :controller do
       post :create, :page => { :url => "abc" }, :format => 'js'
     end
 
-    it "extracts the text from the page" do
-      expect(PageExtractor).to receive(:extract_page).and_return(page)
-      do_create
-    end
-
     it "creates a new page" do
-      expect(user).to receive_message_chain(:pages, :create)
       do_create
+      expect(@user.pages.count).to eq(1)
     end
 
     it "starts the word stream" do

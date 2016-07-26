@@ -13,7 +13,9 @@ class PagesController < ApplicationController
     url = params[:page][:url]
     speed = params[:page][:speed].to_i
 
-    @page = Page.create(:url => url, :user_id => current_user.id)
+    @page = current_user.pages.create!(
+      :url => url
+    )
     job_id = WordScheduler.start(@page, speed)
     session[:job] = job_id
 
