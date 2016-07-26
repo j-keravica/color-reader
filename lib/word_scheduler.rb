@@ -2,8 +2,9 @@ class WordScheduler
 
   attr_reader :job_id
 
-  def self.start(speed, words, color_option)
-    scheduler = self.new(speed, words, color_option)
+  def self.start(page, speed)
+    words = page.words
+    scheduler = self.new(words, speed)
     scheduler.start
     return scheduler.job_id
   end
@@ -18,10 +19,9 @@ class WordScheduler
     job.resume if job.paused?
   end
 
-  def initialize(speed, words, color_option)
-    @speed = speed
+  def initialize(words, speed)
     @words = words
-    @color_option = color_option
+    @speed = speed
   end
 
   def interval
@@ -41,10 +41,9 @@ class WordScheduler
 
   def send(word)
     RestClient.post(
-      ENV['COLOR_URL'] + '/color',
+      ENV["SEND_URL"],
       {
-        :word => word,
-        :color => @color_option
+        :word => word
       }
     )
   end
