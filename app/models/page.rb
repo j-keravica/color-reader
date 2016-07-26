@@ -4,17 +4,25 @@ class Page < ActiveRecord::Base
   validates :url, :presence => true
 
   def words
-    unless text.present?
-      RestClient.post(
-        ENV["EXTRACT_URL"],
-        {
-          :url => url
-        }
-      )
-      response = JSON.parse(response)
-      update_attributes!(:text => response["text"])
-    end
     text.split
+  end
+
+  def text
+    self[:text] || fetch_text
+  end
+
+  private
+
+  def fetch_text
+    RestClient.post(
+      ENV["EXTRACT_URL"],
+      {
+        :url => url
+      }
+    )
+    response = JSON.parse(response)
+    update_attributes!(:text => response["text"])
+    return self.text
   end
 
 end
