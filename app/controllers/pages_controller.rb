@@ -1,4 +1,3 @@
-require 'open-uri'
 require 'rest-client'
 
 class PagesController < ApplicationController
@@ -12,14 +11,15 @@ class PagesController < ApplicationController
 
   def create
     url = params[:page][:url]
-    extracted_page = PageExtractor.extract_page(url)
-    current_user.pages.create(:url => url, :title => extracted_page.title, :text => extracted_page.text) unless current_user.nil?
-    job_id = WordScheduler.start(params[:page][:speed].to_i, extracted_page.text.split, params[:page][:color])
+    speed = params[:page][:speed].to_i
+
+    @page = Page.create(:url => url, :user_id => current_user.id)
+    job_id = WordScheduler.start(@page, speed)
     session[:job] = job_id
 
   rescue Exceptions::InvalidURL => e
     @message = e.message
-    respond_to do |format|   
+    respond_to do |format|
       format.js { render "invalid" }
     end
   end
