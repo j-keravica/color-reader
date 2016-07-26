@@ -12,7 +12,7 @@ RSpec.describe "Word Scheduler" do
       ]
       examples.each do |example|
         input = example[:input]
-        @scheduler = WordScheduler.new(input, [], "b")
+        @scheduler = WordScheduler.new([], input)
         expect(@scheduler.interval).to eq(example[:result])
       end
     end
@@ -21,19 +21,30 @@ RSpec.describe "Word Scheduler" do
 
   describe "#start" do
 
+    before do
+      @page = instance_double(Page, :url => "www.bla.com")
+      allow(@page).to receive(:words) { ["Some", "words"] }
+    end
+
     it "periodically sends the words with the color information" do
-      ENV["COLOR_URL"] = "test"
+      ENV["SEND_URL"] = "test"
 
-      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "Some", :color => "b"})
-      expect(RestClient).to receive(:post).with(ENV["COLOR_URL"] + '/color', {:word => "words", :color => "b"})
+      expect(RestClient).to receive(:post).with(
+        ENV["SEND_URL"],
+        { :word => "Some" }
+      )
+      expect(RestClient).to receive(:post).with(
+        ENV["SEND_URL"],
+        { :word => "words" }
+      )
 
-      WordScheduler.start(60, ["Some", "words"], "b")
+      WordScheduler.start(@page, 60)
       sleep 2.5
     end
 
     it "returns the sending job's id" do
-      ENV["COLOR_URL"] = "test"
-      job_id = WordScheduler.start(60, ["Some", "words"], "b")
+      ENV["SEND_URL"] = "test"
+      job_id = WordScheduler.start(@page, 60)
       expect(job_id).to_not be_nil
     end
 
