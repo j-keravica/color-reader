@@ -1,11 +1,5 @@
 == README
 
-Color Reader is the first part of a microservices architecture example
-I did during my intership. It extracts the text from the specified URL and
-sumilates speed reading by pushing the words back to the user's screen.
-
-The other two parts include a specialized API for adding color information
-text-color[https://github.com/j-keravica/text-color] and the one used
-to push the words back to the user, text-send[https://github.com/j-keravica/text-send].
-
-This app is hosted on Heroku[https://glacial-hollows-5011.herokuapp.com/].
+Color Reader a part of an example application I did during my intership. It
+extracts the text from the specified URL and sumilates speed reading by pushing
+the words back to the user's screen.
