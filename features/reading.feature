@@ -8,7 +8,7 @@ Feature: Reading
     Given I am on the home page
     And I am signed in
 
-  @javascript
+  @javascript @valid_url
   Scenario: Filling in the form with a valid url
     When I fill in the form with a valid url
     Then I should see a message saying the text is being processed
