@@ -14,7 +14,7 @@ class Page < ActiveRecord::Base
   private
 
   def fetch_text
-    RestClient.post(
+    response = RestClient.post(
       ENV["EXTRACT_URL"],
       {
         :url => url
