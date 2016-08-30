@@ -9,5 +9,6 @@ end
 
 VCR.cucumber_tags do |t|
   t.tag "@valid_url"
+  t.tag "@invalid_url"
 end
 

@@ -14,12 +14,16 @@ class Page < ActiveRecord::Base
   private
 
   def fetch_text
-    response = RestClient.post(
-      ENV["EXTRACT_URL"],
-      {
-        :url => url
-      }
-    )
+    begin
+      response = RestClient.post(
+        ENV["EXTRACT_URL"],
+        {
+          :url => url
+        }
+      )
+    rescue RestClient::NotFound
+      raise Exceptions::InvalidURL, "URL is not valid"
+    end
     response = JSON.parse(response)
     update_attributes!(:text => response["text"])
     return self.text
