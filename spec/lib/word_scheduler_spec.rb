@@ -31,11 +31,11 @@ RSpec.describe "Word Scheduler" do
 
       expect(RestClient).to receive(:post).with(
         ENV["SEND_URL"],
-        { :word => "Some" }
+        { :word => "Some", :channel => "test_channel" }
       )
       expect(RestClient).to receive(:post).with(
         ENV["SEND_URL"],
-        { :word => "words" }
+        { :word => "words", :channel => "test_channel" }
       )
 
       WordScheduler.start(@page, 60)

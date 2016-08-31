@@ -43,7 +43,8 @@ class WordScheduler
     RestClient.post(
       ENV["SEND_URL"],
       {
-        :word => word
+        :word => word,
+        :channel => "test_channel"
       }
     )
   end
