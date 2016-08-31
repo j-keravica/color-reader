@@ -21,7 +21,7 @@ When(/^I fill in the form with a bad url$/) do
 end
 
 Then(/^I should see a message saying the url is invalid$/) do
-  expect(page).to have_content "URL format is not valid"
+  expect(page).to have_content "URL is not valid"
 end
 
 When(/^I fill in the form with a url that cannot be reached$/) do

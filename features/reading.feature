@@ -8,17 +8,12 @@ Feature: Reading
     Given I am on the home page
     And I am signed in
 
-  @javascript
+  @javascript @valid_url
   Scenario: Filling in the form with a valid url
     When I fill in the form with a valid url
     Then I should see a message saying the text is being processed
 
-  @javascript
+  @javascript @invalid_url
   Scenario: Filling in the form with an invalid url
     When I fill in the form with a bad url
     Then I should see a message saying the url is invalid
-
-  @javascript
-  Scenario: Filling in the form with an unreachable url
-    When I fill in the form with a url that cannot be reached
-    Then I should see a message saying the url is unreachable
