@@ -11,6 +11,7 @@ class PagesController < ApplicationController
 
   def create
     url = params[:page][:url]
+    xpath = params[:page][:xpath]
     speed = params[:page][:speed].to_i
 
     @page = current_user.pages.create!(

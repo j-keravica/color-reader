@@ -43,6 +43,7 @@ gem 'rails_12factor', group: :production
 #gem 'less-rails'
 
 gem 'bootstrap-sass', '~> 3.2.0'
+gem "font-awesome-sass"
 gem 'autoprefixer-rails'
 
 
