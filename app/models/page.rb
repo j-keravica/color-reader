@@ -18,7 +18,8 @@ class Page < ActiveRecord::Base
       response = RestClient.post(
         ENV["EXTRACT_URL"],
         {
-          :url => url
+          :url => url,
+          :xpath => xpath
         }
       )
     rescue RestClient::NotFound
