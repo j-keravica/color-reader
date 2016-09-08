@@ -49,7 +49,8 @@ RSpec.describe Page do
       it "sends post request to fetch the text" do
         expect(RestClient).to receive(:post).with(
           "test",
-          :url => "abc"
+          :url => "abc",
+          :xpath => nil
         )
         text = @page.text
         expect(text).to eql("bla")
