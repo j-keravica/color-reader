@@ -17,21 +17,27 @@
   </div>
 
   <div class="row">
+    <a id="show-options" class="row" style="cursor: pointer">Show advanced options</a>
+  </div>
+
+  <div class="row">
+    <div id="advanced-options" style="display: none" class="form-group col-md-offset-2 col-md-8">
+      <%= f.label :xpath, :class => "sr-only" %>
+      <%= f.text_field :xpath, class: "form-control input-sm", placeholder: "Write custom xpath for extraction" %>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="form-group col-xs-4 col-xs-offset-4">
       <%= f.submit "Read!", :id => "read_btn", :class => "btn btn-primary btn-block", :style => "padding: 0" %>
     </div>
   </div>
 
+  <div id="notification" class="row">
+    &nbsp;
+  </div>
+
 <% end %>
-
-<div id="notification">
-  &nbsp;
-</div>
-
-<button id="show-options" >Show advanced options</button>
-<div id="advanced-options" style="display: none">
-  <p>Advanced options</p>
-</div>
 
 <canvas id="myCanvas" width="350" height="70" style="border:1px solid #285e8e; border-radius: 5px; align: center">
   Your browser does not support the HTML5 canvas tag.
